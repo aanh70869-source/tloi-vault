@@ -4,174 +4,134 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TLOI VAULT</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
-body{
-background:#050816;
-color:white;
-padding:20px;
-}
-.logo{
-text-align:center;
-font-size:38px;
-font-weight:bold;
-margin-top:20px;
-color:#9b59ff;
-}
-.card{
-background:#10172e;
-border-radius:20px;
-padding:20px;
-margin-top:20px;
-}
-input{
-width:100%;
-padding:15px;
-border:none;
-border-radius:12px;
-background:#1a2547;
-color:white;
-margin-top:10px;
-}
-button{
-width:100%;
-padding:15px;
-border:none;
-border-radius:12px;
-margin-top:15px;
-font-weight:bold;
-font-size:18px;
-background:linear-gradient(90deg,#3aa0ff,#b33cff);
-color:white;
-}
-.package{
-background:#182442;
-padding:15px;
-border-radius:15px;
-margin-top:12px;
-}
-.package h3{
-margin-bottom:10px;
-}
-.hidden{
-display:none;
-}
-.popup{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,.8);
-display:flex;
-justify-content:center;
-align-items:center;
-z-index:999;
-}
-.popup-box{
-background:#10172e;
-padding:25px;
-border-radius:20px;
-width:90%;
-max-width:400px;
-text-align:center;
-}
-.close{
-margin-top:15px;
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{background:#050816;color:white}
+.container{display:flex;min-height:100vh}
+.sidebar{width:260px;background:#0d1324;padding:25px}
+.logo{font-size:28px;font-weight:700;text-align:center;margin-bottom:30px;color:#4fd1ff}
+.sidebar ul{list-style:none}
+.sidebar li{padding:14px;margin-bottom:10px;border-radius:12px;background:#121c34}
+.main{flex:1;padding:25px}
+.top-card{background:linear-gradient(135deg,#00b4ff,#7d3cff);padding:25px;border-radius:20px;margin-bottom:20px}
+.card{background:#0f1729;padding:20px;border-radius:20px;margin-bottom:20px}
+.card h2{margin-bottom:15px;color:#66d9ff}
+input{width:100%;padding:14px;margin-bottom:12px;border:none;border-radius:12px;background:#18223d;color:white}
+button{width:100%;padding:14px;border:none;border-radius:12px;background:linear-gradient(90deg,#00b4ff,#7d3cff);color:white}
+.package-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px}
+.package{background:#18223d;padding:20px;border-radius:15px;text-align:center}
+.zalo-btn{display:inline-block;padding:12px 18px;background:#00b4ff;border-radius:12px;color:white;text-decoration:none}
+.popup{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:9999}
+.popup-box{width:90%;max-width:500px;background:#111a2f;padding:25px;border-radius:20px;text-align:center}
+@media(max-width:900px){
+.container{flex-direction:column}
+.sidebar{width:100%}
 }
 </style>
 </head>
 <body>
-<div class="popup" id="popup">
+<div id="popup" class="popup">
 <div class="popup-box">
-<h2>THÔNG BÁO</h2>
-<br>
-<p>Mua Proxy liên hệ ADMIN</p>
-<p><b>TikTok:</b> tloi.vault</p>
-<br>
+<h2>🎉 CHÀO MỪNG ĐẾN VỚI TLOI VAULT</h2>
+<p>TikTok Admin: <b>tloi.vault</b></p>
+<p>Zalo: <b>0347433681</b></p>
+<p>Liên hệ hỗ trợ khi cần.</p>
 <button onclick="closePopup()">Đóng</button>
 </div>
 </div>
+<div class="container">
+<aside class="sidebar">
 <div class="logo">TLOI VAULT</div>
-<div id="login">
-<div class="card">
-<h2>Nhập License Key</h2>
-<input id="key" placeholder="Nhập key...">
-<button onclick="login()">TIẾP TỤC</button>
+<ul>
+<li>🏠 Trang Chủ</li>
+<li>🔑 Kích Hoạt Key</li>
+<li>📜 Lịch Sử Key</li>
+<li>💳 Nạp Tiền</li>
+<li>📦 Kho Hàng 1</li>
+<li>📦 Kho Hàng 2</li>
+<li>📦 Kho Hàng 3</li>
+<li>📦 Kho Hàng 4</li>
+<li>📦 Kho Hàng 5</li>
+<li>👑 Kho Hàng VIP</li>
+<li>💬 Hỗ Trợ</li>
+</ul>
+</aside>
+<main class="main">
+<div class="top-card">
+<h1>TLOI VAULT</h1>
+<p>Dashboard quản lý dịch vụ</p>
 </div>
 <div class="card">
-<h2>Các Gói Proxy</h2>
-<div class="package">
-<h3>1 NGÀY</h3>
-<p>10.000đ</p>
+<h2>🔑 Kích Hoạt Key</h2>
+<input type="text" id="userKey" placeholder="Nhập Key">
+<button onclick="checkKey()">Kích Hoạt</button>
+<p id="result"></p>
 </div>
-<div class="package">
-<h3>1 TUẦN</h3>
-<p>50.000đ</p>
+<div class="card">
+<h2>👑 Đăng Nhập Admin</h2>
+<input type="text" id="adminUser" placeholder="Tên đăng nhập">
+<input type="password" id="adminPass" placeholder="Mật khẩu">
+<button onclick="adminLogin()">Đăng Nhập</button>
 </div>
-<div class="package">
-<h3>1 THÁNG</h3>
-<p>150.000đ</p>
+<div class="card">
+<h2>💳 Thanh Toán</h2>
+<p><b>Ngân hàng:</b> MB BANK</p>
+<p><b>Chủ TK:</b> NGUYEN SY GIA BAO</p>
+<p><b>STK:</b> 199457</p>
 </div>
-<div class="package">
-<h3>VĨNH VIỄN</h3>
-<p>300.000đ</p>
+<div class="card">
+<h2>📦 Danh Sách Gói</h2>
+<div class="package-grid">
+<div class="package">Kho Hàng 1</div>
+<div class="package">Kho Hàng 2</div>
+<div class="package">Kho Hàng 3</div>
+<div class="package">Kho Hàng 4</div>
+<div class="package">Kho Hàng 5</div>
+<div class="package">Kho Hàng VIP</div>
 </div>
 </div>
 <div class="card">
-<h2>Thanh Toán</h2>
-<p>Ngân hàng: MB Bank</p>
-<p>STK: 199457</p>
-<p>Chủ TK: NGUYỄN SỸ GIA BẢO</p>
-<p>Nội dung: BNNMO29</p>
-</div>
-</div>
-<div id="dashboard" class="hidden">
-<div class="card">
-<h2>Đăng nhập thành công</h2>
-<br>
-<p>Chào mừng đến TLOI VAULT</p>
-</div>
-<div class="card">
-<h2>Thông Tin Key</h2>
-<p id="info"></p>
-</div>
-<div class="card">
-<h2>ADMIN</h2>
+<h2>💬 Hỗ Trợ Khách Hàng</h2>
+<a class="zalo-btn" href="https://zaloapp.com/qr/p/p0tsnz2x06il?src=qr" target="_blank">Liên Hệ Zalo</a>
 <p>TikTok: tloi.vault</p>
+<p>Zalo: 0347433681</p>
 </div>
+</main>
 </div>
 <script>
 function closePopup(){
 document.getElementById("popup").style.display="none";
 }
-function login(){
-let key=document.getElementById("key").value.trim();
-let text="";
-if(key==="TLOI-1D-2025"){
-text="Gói 1 Ngày";
+setTimeout(()=>{
+const popup=document.getElementById("popup");
+if(popup) popup.style.display="none";
+},7200000);
+const validKeys=[
+"TLOI-1D-2025",
+"TLOI-7D-2025",
+"TLOI-30D-2025",
+"TLOI-LIFE-2025"
+];
+function checkKey(){
+const key=document.getElementById("userKey").value.trim();
+const result=document.getElementById("result");
+if(validKeys.includes(key)){
+result.innerHTML="✅ Kích hoạt thành công";
+result.style.color="#4ade80";
+}else{
+result.innerHTML="❌ Key không hợp lệ";
+result.style.color="#f87171";
 }
-else if(key==="TLOI-7D-2025"){
-text="Gói 1 Tuần";
 }
-else if(key==="TLOI-30D-2025"){
-text="Gói 1 Tháng";
+function adminLogin(){
+const user=document.getElementById("adminUser").value.trim();
+const pass=document.getElementById("adminPass").value;
+if(user==="admin" && pass==="Naodepzai771"){
+alert("Đăng nhập Admin thành công!");
+}else{
+alert("Sai tài khoản hoặc mật khẩu!");
 }
-else if(key==="TLOI-LIFE-2025"){
-text="Gói Vĩnh Viễn";
-}
-else{
-alert("Key không hợp lệ");
-return;
-}
-document.getElementById("login").style.display="none";
-document.getElementById("dashboard").classList.remove("hidden");
-document.getElementById("info").innerText=text;
 }
 </script>
 </body>
