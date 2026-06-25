@@ -1,1 +1,178 @@
-<!DOCTYPE html><html><head><meta charset='utf-8'><title>TLOI</title></head><body><h1>TLOI</h1><p>Demo website.</p></body></html>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TLOI VAULT</title>
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+body{
+background:#050816;
+color:white;
+padding:20px;
+}
+.logo{
+text-align:center;
+font-size:38px;
+font-weight:bold;
+margin-top:20px;
+color:#9b59ff;
+}
+.card{
+background:#10172e;
+border-radius:20px;
+padding:20px;
+margin-top:20px;
+}
+input{
+width:100%;
+padding:15px;
+border:none;
+border-radius:12px;
+background:#1a2547;
+color:white;
+margin-top:10px;
+}
+button{
+width:100%;
+padding:15px;
+border:none;
+border-radius:12px;
+margin-top:15px;
+font-weight:bold;
+font-size:18px;
+background:linear-gradient(90deg,#3aa0ff,#b33cff);
+color:white;
+}
+.package{
+background:#182442;
+padding:15px;
+border-radius:15px;
+margin-top:12px;
+}
+.package h3{
+margin-bottom:10px;
+}
+.hidden{
+display:none;
+}
+.popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.8);
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+.popup-box{
+background:#10172e;
+padding:25px;
+border-radius:20px;
+width:90%;
+max-width:400px;
+text-align:center;
+}
+.close{
+margin-top:15px;
+}
+</style>
+</head>
+<body>
+<div class="popup" id="popup">
+<div class="popup-box">
+<h2>THÔNG BÁO</h2>
+<br>
+<p>Mua Proxy liên hệ ADMIN</p>
+<p><b>TikTok:</b> tloi.vault</p>
+<br>
+<button onclick="closePopup()">Đóng</button>
+</div>
+</div>
+<div class="logo">TLOI VAULT</div>
+<div id="login">
+<div class="card">
+<h2>Nhập License Key</h2>
+<input id="key" placeholder="Nhập key...">
+<button onclick="login()">TIẾP TỤC</button>
+</div>
+<div class="card">
+<h2>Các Gói Proxy</h2>
+<div class="package">
+<h3>1 NGÀY</h3>
+<p>10.000đ</p>
+</div>
+<div class="package">
+<h3>1 TUẦN</h3>
+<p>50.000đ</p>
+</div>
+<div class="package">
+<h3>1 THÁNG</h3>
+<p>150.000đ</p>
+</div>
+<div class="package">
+<h3>VĨNH VIỄN</h3>
+<p>300.000đ</p>
+</div>
+</div>
+<div class="card">
+<h2>Thanh Toán</h2>
+<p>Ngân hàng: MB Bank</p>
+<p>STK: 199457</p>
+<p>Chủ TK: NGUYỄN SỸ GIA BẢO</p>
+<p>Nội dung: BNNMO29</p>
+</div>
+</div>
+<div id="dashboard" class="hidden">
+<div class="card">
+<h2>Đăng nhập thành công</h2>
+<br>
+<p>Chào mừng đến TLOI VAULT</p>
+</div>
+<div class="card">
+<h2>Thông Tin Key</h2>
+<p id="info"></p>
+</div>
+<div class="card">
+<h2>ADMIN</h2>
+<p>TikTok: tloi.vault</p>
+</div>
+</div>
+<script>
+function closePopup(){
+document.getElementById("popup").style.display="none";
+}
+function login(){
+let key=document.getElementById("key").value.trim();
+let text="";
+if(key==="TLOI-1D-2025"){
+text="Gói 1 Ngày";
+}
+else if(key==="TLOI-7D-2025"){
+text="Gói 1 Tuần";
+}
+else if(key==="TLOI-30D-2025"){
+text="Gói 1 Tháng";
+}
+else if(key==="TLOI-LIFE-2025"){
+text="Gói Vĩnh Viễn";
+}
+else{
+alert("Key không hợp lệ");
+return;
+}
+document.getElementById("login").style.display="none";
+document.getElementById("dashboard").classList.remove("hidden");
+document.getElementById("info").innerText=text;
+}
+</script>
+</body>
+</html>
