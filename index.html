@@ -1,130 +1,506 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TLOI VAULT</title>
+<!-- PHẦN 1: ĐĂNG NHẬP / ĐĂNG KÝ -->
+
+<div class="auth-container">
+
+  <div class="auth-card">
+    <h2>Đăng Nhập</h2>
+
+    <input type="text" id="loginUser" placeholder="Tên tài khoản">
+    <input type="password" id="loginPass" placeholder="Mật khẩu">
+
+    <button onclick="login()">Đăng Nhập</button>
+  </div>
+
+  <div class="auth-card">
+    <h2>Đăng Ký</h2>
+
+    <input type="text" id="regUser" placeholder="Tên tài khoản">
+    <input type="password" id="regPass" placeholder="Mật khẩu">
+    <input type="text" id="regPhone" placeholder="Số điện thoại">
+
+    <button onclick="register()">Đăng Ký</button>
+  </div>
+
+</div>
+
+<script>
+function register(){
+
+ let user =
+ document.getElementById("regUser").value;
+
+ let pass =
+ document.getElementById("regPass").value;
+
+ let phone =
+ document.getElementById("regPhone").value;
+
+ if(!user || !pass){
+   alert("Nhập đầy đủ thông tin");
+   return;
+ }
+
+ let users =
+ JSON.parse(localStorage.getItem("users")) || [];
+
+ users.push({
+   username:user,
+   password:pass,
+   phone:phone,
+   balance:0
+ });
+
+ localStorage.setItem(
+   "users",
+   JSON.stringify(users)
+ );
+
+ alert("Đăng ký thành công");
+}
+
+function login(){
+
+ let user =
+ document.getElementById("loginUser").value;
+
+ let pass =
+ document.getElementById("loginPass").value;
+
+ if(user==="bao991" && pass==="bao18"){
+   localStorage.setItem("role","admin");
+   alert("Đăng nhập Admin thành công");
+   return;
+ }
+
+ let users =
+ JSON.parse(localStorage.getItem("users")) || [];
+
+ let found =
+ users.find(
+   x =>
+   x.username===user &&
+   x.password===pass
+ );
+
+ if(found){
+   localStorage.setItem(
+     "currentUser",
+     JSON.stringify(found)
+   );
+
+   alert("Đăng nhập thành công");
+ }else{
+   alert("Sai tài khoản hoặc mật khẩu");
+ }
+}
+</script><!-- PHẦN 2: SIDEBAR + HỒ SƠ + KHO HÀNG -->
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
-
 body{
-background:#0a0a0a;
-color:#fff;
-}
-
-.header{
-background:#111;
-padding:20px;
-text-align:center;
-border-bottom:2px solid #ff2b2b;
-}
-
-.header h1{
-color:#ff2b2b;
-font-size:32px;
+ background:#0d0d0d;
+ color:white;
+ font-family:Arial;
 }
 
 .sidebar{
-position:fixed;
-left:0;
-top:0;
-width:240px;
-height:100%;
-background:#111;
-padding-top:90px;
+ width:230px;
+ height:100vh;
+ position:fixed;
+ left:0;
+ top:0;
+ background:#111;
+ padding-top:20px;
 }
 
 .sidebar a{
-display:block;
-padding:15px 20px;
-color:#fff;
-text-decoration:none;
-border-bottom:1px solid #222;
+ display:block;
+ color:white;
+ text-decoration:none;
+ padding:15px;
+ border-bottom:1px solid #222;
 }
 
 .sidebar a:hover{
-background:#ff2b2b;
+ background:#ff2b2b;
 }
 
-.main{
-margin-left:240px;
-padding:20px;
+.content{
+ margin-left:240px;
+ padding:20px;
 }
 
 .card{
-background:#151515;
-border-radius:15px;
-padding:20px;
-margin-bottom:20px;
-border:1px solid #222;
+ background:#151515;
+ border-radius:15px;
+ padding:15px;
+ margin-bottom:15px;
 }
 
-.product-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:20px;
+.products{
+ display:grid;
+ grid-template-columns:
+ repeat(auto-fill,minmax(250px,1fr));
+ gap:15px;
 }
 
 .product{
-background:#151515;
-border-radius:15px;
-overflow:hidden;
-border:1px solid #222;
+ background:#1a1a1a;
+ border-radius:15px;
+ overflow:hidden;
 }
 
 .product img{
-width:100%;
-height:220px;
-object-fit:cover;
+ width:100%;
+ height:180px;
+ object-fit:cover;
 }
 
-.product-content{
-padding:15px;
+.product-info{
+ padding:15px;
 }
 
-.product h3{
-margin-bottom:10px;
+.buyBtn{
+ width:100%;
+ padding:10px;
+ background:#ff2b2b;
+ color:white;
+ border:none;
+ border-radius:10px;
+}
+</style>
+
+<div class="sidebar">
+
+<h2 style="text-align:center">
+TLOI VAULT ⭐
+</h2>
+
+<a href="#">🏠 Trang Chủ</a>
+
+<a href="#">📦 Kho Hàng V1</a>
+
+<a href="#">📦 Kho Hàng V2</a>
+
+<a href="#">📦 Kho Hàng V3</a>
+
+<a href="#">📦 Kho Hàng V4</a>
+
+<a href="#">📦 Kho Hàng V5</a>
+
+<a href="#">📦 CloneLv5</a>
+
+<a href="#">💳 Nạp Tiền</a>
+
+<a href="#">📜 Đơn Hàng</a>
+
+<a href="#">👤 Hồ Sơ</a>
+
+</div>
+
+<div class="content">
+
+<div class="card">
+
+<h2>👤 Hồ Sơ</h2>
+
+<p id="profileName"></p>
+
+<p id="profilePhone"></p>
+
+<p id="profileBalance"></p>
+
+</div>
+
+<div class="card">
+
+<h2>📦 Danh Sách Sản Phẩm</h2>
+
+<div class="products">
+
+<div class="product">
+
+<img src="banner.jpg">
+
+<div class="product-info">
+
+<h3>Kho Hàng V1</h3>
+
+<p>📦 Tồn:
+<span id="stock1"></span>
+</p>
+
+<p>💰 20.000đ</p>
+
+<button class="buyBtn"
+onclick="buyProduct(
+'Kho Hàng V1',
+20000
+)">
+MUA NGAY
+</button>
+
+</div>
+</div>
+
+<div class="product">
+
+<img src="banner.jpg">
+
+<div class="product-info">
+
+<h3>Kho Hàng V2</h3>
+
+<p>📦 Tồn:
+<span id="stock2"></span>
+</p>
+
+<p>💰 50.000đ</p>
+
+<button class="buyBtn"
+onclick="buyProduct(
+'Kho Hàng V2',
+50000
+)">
+MUA NGAY
+</button>
+
+</div>
+</div>
+
+<div class="product">
+
+<img src="banner.jpg">
+
+<div class="product-info">
+
+<h3>Kho Hàng V3</h3>
+
+<p>📦 Tồn:
+<span id="stock3"></span>
+</p>
+
+<p>💰 150.000đ</p>
+
+<button class="buyBtn"
+onclick="buyProduct(
+'Kho Hàng V3',
+150000
+)">
+MUA NGAY
+</button>
+
+</div>
+</div>
+
+<div class="product">
+
+<img src="banner.jpg">
+
+<div class="product-info">
+
+<h3>Kho Hàng V4</h3>
+
+<p>📦 Tồn:
+<span id="stock4"></span>
+</p>
+
+<p>💰 350.000đ</p>
+
+<button class="buyBtn"
+onclick="buyProduct(
+'Kho Hàng V4',
+350000
+)">
+MUA NGAY
+</button>
+
+</div>
+</div>
+
+<div class="product">
+
+<img src="banner.jpg">
+
+<div class="product-info">
+
+<h3>Kho Hàng V5</h3>
+
+<p>📦 Tồn:
+<span id="stock5"></span>
+</p>
+
+<p>💰 650.000đ</p>
+
+<button class="buyBtn"
+onclick="buyProduct(
+'Kho Hàng V5',
+650000
+)">
+MUA NGAY
+</button>
+
+</div>
+</div>
+
+<div class="product">
+
+<img src="banner.jpg">
+
+<div class="product-info">
+
+<h3>CloneLv5</h3>
+
+<p>📦 Tồn:
+<span id="stock6"></span>
+</p>
+
+<p>💰 2.000đ</p>
+
+<button class="buyBtn"
+onclick="buyProduct(
+'CloneLv5',
+2000
+)">
+MUA NGAY
+</button>
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+let currentUser =
+JSON.parse(
+localStorage.getItem(
+"currentUser"
+)
+);
+
+if(currentUser){
+
+document.getElementById(
+"profileName"
+).innerText =
+"Tài khoản: " +
+currentUser.username;
+
+document.getElementById(
+"profilePhone"
+).innerText =
+"SĐT: " +
+currentUser.phone;
+
+document.getElementById(
+"profileBalance"
+).innerText =
+"Số dư: " +
+currentUser.balance.toLocaleString()
++"đ";
+
 }
 
-.stock{
-color:#00ff88;
-margin-bottom:8px;
+for(let i=1;i<=6;i++){
+
+document.getElementById(
+"stock"+i
+).innerText =
+Math.floor(
+Math.random()*400
+)+1;
+
 }
 
-.sold{
-color:#ffb400;
-margin-bottom:8px;
+function buyProduct(
+name,
+price
+){
+
+alert(
+"Mua: "+
+name+
+"\nGiá: "+
+price.toLocaleString()+
+"đ"
+);
+
 }
 
-.price{
-font-size:22px;
-font-weight:bold;
-color:#ff2b2b;
-margin-bottom:10px;
-}
+</script><!-- PHẦN 3: NẠP TIỀN + ĐƠN HÀNG + LỊCH SỬ -->
 
-button{
-width:100%;
-padding:12px;
-border:none;
-border-radius:10px;
-background:#ff2b2b;
-color:white;
-font-weight:bold;
-cursor:pointer;
-}
+<div class="card">
 
-button:hover{
-opacity:.9;
-}
+<h2>💳 Nạp Tiền</h2>
 
-.popup{
+<p>
+Ngân hàng:
+MB BANK
+</p>
+
+<p>
+Chủ TK:
+NGUYEN SY GIA BAO
+</p>
+
+<p>
+STK:
+199457
+</p>
+
+<p>
+Nội dung CK:
+NSGBDZS1TG
+</p>
+
+<p style="color:#ffb400">
+⚠ Nạp đúng mệnh giá
+</p>
+
+<button onclick="showQR()">
+HIỂN THỊ QR
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>📜 Đơn Hàng</h2>
+
+<div id="orderList">
+Chưa có đơn hàng
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>📞 Hỗ Trợ Khách Hàng</h2>
+
+<p>
+TikTok:
+tloi.vault
+</p>
+
+<p>
+Zalo:
+0347433681
+</p>
+
+<button onclick="openZalo()">
+LIÊN HỆ ZALO
+</button>
+
+</div>
+
+<!-- POPUP QR -->
+
+<div
+id="qrPopup"
+style="
 display:none;
 position:fixed;
 top:0;
@@ -134,191 +510,183 @@ height:100%;
 background:rgba(0,0,0,.8);
 justify-content:center;
 align-items:center;
-}
+"
+>
 
-.popup-content{
-background:#111;
-padding:25px;
+<div
+style="
+background:#151515;
+padding:20px;
 border-radius:15px;
+max-width:400px;
 width:90%;
-max-width:450px;
-}
+"
+>
 
-.close{
-float:right;
-cursor:pointer;
-font-size:22px;
-}
+<h2>💳 QR THANH TOÁN</h2>
 
-@media(max-width:768px){
+<p>
+MB BANK
+</p>
 
-.sidebar{
-position:relative;
+<p>
+NGUYEN SY GIA BAO
+</p>
+
+<p>
+199457
+</p>
+
+<p>
+Nội dung:
+NSGBDZS1TG
+</p>
+
+<!-- THAY QR CỦA BẠN -->
+
+<img
+src="qr.jpg"
+style="
 width:100%;
-height:auto;
-padding-top:0;
-}
+border-radius:10px;
+"
+>
 
-.main{
-margin-left:0;
-}
+<br><br>
 
-}
-</style>
-</head>
-
-<body>
-
-<div class="header">
-<h1>TLOI VAULT</h1>
-<p>NGUYEN SY GIA BAO • MB BANK • STK 199457</p>
-</div>
-
-<div class="sidebar">
-<a href="#">🏠 Trang Chủ</a>
-<a href="#">📦 Gói Cơ Bản</a>
-<a href="#">📦 Gói Tiêu Chuẩn</a>
-<a href="#">📦 Gói Nâng Cao</a>
-<a href="#">📦 Gói Chuyên Nghiệp</a>
-<a href="#">👑 Gói Premium</a>
-<a href="#">🔑 Kích Hoạt License</a>
-<a href="#">📜 Lịch Sử Giao Dịch</a>
-<a href="#">💳 Thanh Toán</a>
-<a href="#">💬 Hỗ Trợ</a>
-<a href="#">👤 Đăng Nhập</a>
-</div>
-
-<div class="main">
-
-<div class="card">
-<h2>🎉 Chào mừng đến với TLOI VAULT</h2>
-<p>TikTok: tloi.vault</p>
-<p>Zalo: 0347433681</p>
-</div>
-
-<div class="product-grid">
-
-<div class="product">
-<img src="banner.jpg">
-<div class="product-content">
-<h3>Gói Cơ Bản</h3>
-<p class="stock">📦 Tồn kho: 187</p>
-<p class="sold">🔥 Đã bán: 63</p>
-<p class="price">20.000đ</p>
-<button onclick="buy('Gói Cơ Bản','20000')">MUA NGAY</button>
-</div>
-</div>
-
-<div class="product">
-<img src="banner.jpg">
-<div class="product-content">
-<h3>Gói Tiêu Chuẩn</h3>
-<p class="stock">📦 Tồn kho: 294</p>
-<p class="sold">🔥 Đã bán: 81</p>
-<p class="price">50.000đ</p>
-<button onclick="buy('Gói Tiêu Chuẩn','50000')">MUA NGAY</button>
-</div>
-</div>
-
-<div class="product">
-<img src="banner.jpg">
-<div class="product-content">
-<h3>Gói Nâng Cao</h3>
-<p class="stock">📦 Tồn kho: 152</p>
-<p class="sold">🔥 Đã bán: 97</p>
-<p class="price">100.000đ</p>
-<button onclick="buy('Gói Nâng Cao','100000')">MUA NGAY</button>
-</div>
-</div>
-
-<div class="product">
-<img src="banner.jpg">
-<div class="product-content">
-<h3>Gói Chuyên Nghiệp</h3>
-<p class="stock">📦 Tồn kho: 87</p>
-<p class="sold">🔥 Đã bán: 121</p>
-<p class="price">150.000đ</p>
-<button onclick="buy('Gói Chuyên Nghiệp','150000')">MUA NGAY</button>
-</div>
-</div>
-
-<div class="product">
-<img src="banner.jpg">
-<div class="product-content">
-<h3>Gói Premium</h3>
-<p class="stock">📦 Tồn kho: 55</p>
-<p class="sold">🔥 Đã bán: 211</p>
-<p class="price">300.000đ</p>
-<button onclick="buy('Gói Premium','300000')">MUA NGAY</button>
-</div>
-</div>
+<button onclick="closeQR()">
+ĐÓNG
+</button>
 
 </div>
-</div>
 
-<div class="popup" id="paymentPopup">
-<div class="popup-content">
-
-<span class="close" onclick="closePopup()">✖</span>
-
-<h2>💳 Thanh Toán</h2>
-
-<p><b>Sản phẩm:</b> <span id="productName"></span></p>
-
-<p><b>Ngân hàng:</b> MB BANK</p>
-<p><b>Chủ TK:</b> NGUYEN SY GIA BAO</p>
-<p><b>STK:</b> 199457</p>
-
-<p><b>Nội dung CK:</b></p>
-<p id="orderCode"></p>
-
-<br>
-
-<button onclick="paid()">TÔI ĐÃ THANH TOÁN</button>
-
-</div>
 </div>
 
 <script>
 
-function buy(name,price){
+function showQR(){
 
-let code =
-'TLOI' +
-Math.floor(Math.random()*999999);
-
-document.getElementById('productName').innerText =
-name;
-
-document.getElementById('orderCode').innerText =
-code;
-
-document.getElementById('paymentPopup').style.display =
-'flex';
+document.getElementById(
+"qrPopup"
+).style.display =
+"flex";
 
 }
 
-function closePopup(){
+function closeQR(){
 
-document.getElementById('paymentPopup').style.display =
-'none';
+document.getElementById(
+"qrPopup"
+).style.display =
+"none";
 
 }
 
-function paid(){
-
-alert(
-'Vui lòng liên hệ Zalo 0347433681 để xác nhận thanh toán.'
-);
+function openZalo(){
 
 window.open(
-'https://zaloapp.com/qr/p/p0tsnz2x06il?src=qr',
-'_blank'
+"https://zaloapp.com/qr/p/p0tsnz2x06il?src=qr",
+"_blank"
 );
 
 }
 
-</script>
+let orders =
+JSON.parse(
+localStorage.getItem(
+"orders"
+)
+) || [];
 
-</body>
-</html>
+function buyProduct(
+name,
+price
+){
+
+let order = {
+
+id:
+Date.now(),
+
+product:
+name,
+
+price:
+price,
+
+status:
+"Đang chờ duyệt",
+
+time:
+new Date()
+.toLocaleString()
+
+};
+
+orders.push(order);
+
+localStorage.setItem(
+"orders",
+JSON.stringify(
+orders
+)
+);
+
+renderOrders();
+
+alert(
+"Đơn hàng đã được tạo!"
+);
+
+}
+
+function renderOrders(){
+
+let html = "";
+
+orders.forEach(item=>{
+
+html +=
+`
+<div
+style="
+background:#1b1b1b;
+padding:10px;
+margin-bottom:10px;
+border-radius:10px;
+"
+>
+
+<h4>
+${item.product}
+</h4>
+
+<p>
+Giá:
+${item.price.toLocaleString()}đ
+</p>
+
+<p>
+Trạng thái:
+${item.status}
+</p>
+
+<p>
+${item.time}
+</p>
+
+</div>
+`;
+
+});
+
+document.getElementById(
+"orderList"
+).innerHTML =
+html || "Chưa có đơn hàng";
+
+}
+
+renderOrders();
+
+</script>
